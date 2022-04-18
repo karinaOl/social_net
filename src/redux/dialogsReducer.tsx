@@ -11,13 +11,13 @@ export type MessageType = {
     message: string
 }
 
-type initialDialogStateType = {
+export type initialDialogStateType = {
     dialogs: Array<DialogType>
     messages: Array<MessageType>
     newMessageBody: string
 }
 
-export type DialogsActionType = ReturnType<typeof SendMessageCreator> | ReturnType<typeof UpDateNewMessageBodyCreator>
+export type DialogsActionType = ReturnType<typeof sendMessageCreator> | ReturnType<typeof updateNewMessageBodyCreator>
 
 const UPDATE_NEW_MESSAGE_BODY = 'UPDATE_NEW_MESSAGE_BODY';
 const SEND_MESSAGE= 'SEND_MESSAGE';
@@ -37,14 +37,14 @@ const initialState: initialDialogStateType = {
     newMessageBody: ''
 }
 
-export const UpDateNewMessageBodyCreator = (body: string) => {
+export const updateNewMessageBodyCreator = (body: string) => {
     return{
         type:UPDATE_NEW_MESSAGE_BODY,
         body: body
     } as const
 }
 
-export const SendMessageCreator = () => {
+export const sendMessageCreator = () => {
     return{
         type: SEND_MESSAGE
     } as const

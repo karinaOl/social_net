@@ -3,37 +3,37 @@ import {Message} from "./Message/Message";
 import {DialogItems} from "./DialogItem/DialogItem";
 import {ActionType, DialogType, MessageType} from "../../redux/state";
 import React, {ChangeEvent} from "react";
-import { SendMessageCreator, UpDateNewMessageBodyCreator } from '../../redux/dialogsReducer';
+import {initialDialogStateType, sendMessageCreator, updateNewMessageBodyCreator} from '../../redux/dialogsReducer';
 
 type DialogsPropsType = {
-    dialogsData: Array<DialogType>
-    messagesData: Array<MessageType>
-    newMessageBody: string
-    dispatch: (action: ActionType)=>void
+    updateNewMessageBody:(body:string)=>void
+    sendMessage:()=>void
+    dialogsPage: initialDialogStateType
 }
 
 export const Dialogs = (props: DialogsPropsType) => {
 
-    let newMessageBody = props.newMessageBody;
+    let newMessageBody = props.dialogsPage.newMessageBody;
+
     const onClickMessagesAddHandler = () => {
-        props.dispatch(SendMessageCreator())
+        props.sendMessage()
     };
     const onChangeNewMessageHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let body = e.currentTarget.value
-        props.dispatch(UpDateNewMessageBodyCreator(body))
+        props.updateNewMessageBody(body)
     };
 
     return (
         <div className={classes.dialogs}>
             <div className={classes.dialogItems}>
 
-                {props.dialogsData.map(d => <DialogItems key={d.id} id={d.id} name={d.name}/>)}
+                {props.dialogsPage.dialogs.map(d => <DialogItems key={d.id} id={d.id} name={d.name}/>)}
 
             </div>
             <div>
                 <div className={classes.messages}>
 
-                    {props.messagesData.map(m => <Message key={m.id} message={m.message} id={m.id}/>)}
+                    {props.dialogsPage.messages.map(m => <Message key={m.id} message={m.message} id={m.id}/>)}
 
                 </div>
                 <div>
