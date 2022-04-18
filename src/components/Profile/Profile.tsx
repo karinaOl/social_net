@@ -5,14 +5,14 @@ import {RootStoreType} from "../../redux/reduxStore";
 
 
 type ProfileType = {
-    store: RootStoreType
+
 }
 
 export const Profile = (props:ProfileType) => {
     return (
         <div>
             <ProfileInfo/>
-            <MyPostsContainer store={props.store}/>
+            <MyPostsContainer/>
         </div>
     )
 }
