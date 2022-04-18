@@ -1,0 +1,18 @@
+.nav{
+    grid-area: n;
+    background-color: aliceblue;
+}
+
+.item{
+    color:  cadetblue;
+}
+
+.navLink{
+    display: block;
+    color: darkslategrey;
+    text-decoration: none;
+}
+
+.navLink.active{
+    background-color: cornflowerblue;
+}
