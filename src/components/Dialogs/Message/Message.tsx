@@ -1,5 +1,5 @@
+import { MessageType } from '../../../redux/dialogsReducer'
 import classes from './../Dialogs.module.css'
-import {MessageType} from "../../../redux/state";
 
 export type MessagePropsType = MessageType
 

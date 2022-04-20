@@ -1,15 +1,10 @@
 import classes from './Dialogs.module.css'
 import {Message} from "./Message/Message";
 import {DialogItems} from "./DialogItem/DialogItem";
-import {ActionType, DialogType, MessageType} from "../../redux/state";
 import React, {ChangeEvent} from "react";
-import {initialDialogStateType, sendMessageCreator, updateNewMessageBodyCreator} from '../../redux/dialogsReducer';
+import {DialogsPropsType} from "./DialogsContainer";
 
-type DialogsPropsType = {
-    updateNewMessageBody:(body:string)=>void
-    sendMessage:()=>void
-    dialogsPage: initialDialogStateType
-}
+
 
 export const Dialogs = (props: DialogsPropsType) => {
 
@@ -39,7 +34,7 @@ export const Dialogs = (props: DialogsPropsType) => {
                 <div>
                     <textarea value={newMessageBody}
                               onChange={onChangeNewMessageHandler}
-                              placeholder={'Enter your message'}></textarea>
+                              placeholder={'Enter your message'}/>
                     <button onClick={onClickMessagesAddHandler}>add</button>
                 </div>
             </div>

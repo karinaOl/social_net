@@ -1,5 +1,4 @@
 import React from "react";
-import {ActionType, DialogsPageType} from "./state";
 
 export type DialogType = {
     id: number
@@ -50,7 +49,7 @@ export const sendMessageCreator = () => {
     } as const
 }
 
-export const dialogsReducer = (state = initialState, action: ActionType) => {
+export const dialogsReducer = (state = initialState, action: DialogsActionType) : initialDialogStateType => {
     switch (action.type) {
         case UPDATE_NEW_MESSAGE_BODY:
             state.newMessageBody = action.body;

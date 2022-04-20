@@ -2,42 +2,42 @@ import {DialogsActionType, dialogsReducer} from "./dialogsReducer";
 import {ProfileActionType, profileReducer} from "./profileReducer";
 import {sidebarReducer} from "./sidebarReducer";
 
-export type MessageType = {
+type MessageType = {
     id: number
     message: string
 }
 
-export type DialogType = {
+type DialogType = {
     id: number
     name: string
 }
 
-export type PostType = {
+type PostType = {
     id: number
     message: string
     likesCount: number
 }
 
-export type DialogsPageType = {
+type DialogsPageType = {
     dialogs: Array<DialogType>
     messages: Array<MessageType>
     newMessageBody: string
 }
 
-export type ProfilePageType = {
+type ProfilePageType = {
     posts: Array<PostType>
     messageForNewPost: string
 }
 
 type SidebarType = {}
 
-export type RootStateType = {
+type RootStateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
     sidebar: SidebarType
 }
 
-export type StoreType = {
+type StoreType = {
     _state: RootStateType
     addPost: (postMessage: string) => void
     changeNewText: (newValue: string) => void
@@ -47,9 +47,9 @@ export type StoreType = {
     dispatch: (action: ActionType) => void
 }
 
-export type ActionType = ProfileActionType | DialogsActionType;
+type ActionType = ProfileActionType | DialogsActionType;
 
-export const store: StoreType = {
+const store: StoreType = {
     _state: {
         profilePage: {
             posts: [
@@ -94,11 +94,11 @@ export const store: StoreType = {
         this._renderTree(this._state);
     },
     dispatch(action) {
-        this._state.profilePage = profileReducer(this._state.profilePage, action);
+        /*this._state.profilePage = profileReducer(this._state.profilePage, action);
         this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
         this._state.sidebar = sidebarReducer(this._state.sidebar, action)
 
-        this._renderTree(this._state)
+        this._renderTree(this._state)*/
     }
 }
 

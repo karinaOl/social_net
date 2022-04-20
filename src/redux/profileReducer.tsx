@@ -1,5 +1,5 @@
 import React from "react";
-import {ActionType, ProfilePageType} from "./state";
+
 
 export type PostType = {
     id: number
@@ -7,7 +7,7 @@ export type PostType = {
     likesCount: number
 }
 
-type initialProfileStateType = {
+export type initialProfileStateType = {
     posts: Array<PostType>
     messageForNewPost: string
 }
@@ -38,7 +38,7 @@ export const changeNewTextActionCreator = (newValue: string) => {
     }  as const
 }
 
-export const profileReducer = (state = initialState, action: ActionType) => {
+export const profileReducer = (state = initialState, action: ProfileActionType) : initialProfileStateType => {
     switch (action.type) {
         case ADD_POST:
             let newPost = {id: new Date().getTime(), message: state.messageForNewPost, likesCount: 1};
