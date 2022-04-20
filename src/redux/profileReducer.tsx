@@ -39,15 +39,20 @@ export const changeNewTextActionCreator = (newValue: string) => {
 }
 
 export const profileReducer = (state = initialState, action: ProfileActionType) : initialProfileStateType => {
+
     switch (action.type) {
         case ADD_POST:
             let newPost = {id: new Date().getTime(), message: state.messageForNewPost, likesCount: 1};
-            state.posts.push(newPost);
-            state.messageForNewPost = ''
-            return state;
+            return  {...state,
+                messageForNewPost: "",
+                posts: [...state.posts, newPost]
+            }
+
         case CHANGE_NEW_TEXT:
-            state.messageForNewPost = action.newValue;
-            return state;
+            return  {
+                ...state,
+                messageForNewPost: action.newValue
+            };
         default:  return state
     }
 }
