@@ -1,4 +1,3 @@
-
 type PhotosType = {
     small: string
     large: string
@@ -14,48 +13,82 @@ export type UserType = {
 
 export type InitialStateUsersType = {
     users: UserType[]
+    pageSize: number
+    totalUserCount: number
+    currentPage: number
 }
 
-export type UsersActionType = ReturnType<typeof followAC> | ReturnType<typeof unfollowAC> | ReturnType<typeof setUsersAC>
+export type UsersActionType = ReturnType<typeof followAC>
+    | ReturnType<typeof unfollowAC>
+    | ReturnType<typeof setUsersAC>
+    | ReturnType<typeof setCurrentPageAC>
+    | ReturnType<typeof setTotalUserCountAC>
 
 const initialState: InitialStateUsersType = {
-    users: []
+    users: [],
+    pageSize: 5,
+    totalUserCount: 0,
+    currentPage: 1
 }
 
 export const followAC = (userID: number) => {
-    return{
+    return {
         type: "FOLLOW",
         userID
     } as const
 }
 export const unfollowAC = (userID: number) => {
-    return{
+    return {
         type: "UNFOLLOW",
         userID
     } as const
 }
 
 export const setUsersAC = (users: UserType[]) => {
-    return{
+    return {
         type: "SET_USERS",
         users
     } as const
 }
 
-export const UsersReducer = (state = initialState, action: UsersActionType) : InitialStateUsersType => {
+export const setCurrentPageAC = (currentPage: number) => {
+    return {
+        type: "SET_CURRENT_PAGE",
+        currentPage
+    } as const
+}
+
+export const setTotalUserCountAC = (totalCount: number) => {
+    return {
+        type: "SET_TOTAL_USER_COUNT",
+        totalCount
+    } as const
+}
+
+export const UsersReducer = (state = initialState, action: UsersActionType): InitialStateUsersType => {
     switch (action.type) {
         case "FOLLOW":
             return {
                 ...state,
-                users: state.users.map(u=>u.id === action.userID ? {...u, followed: true} : u)
+                users: state.users.map(u => u.id === action.userID ? {...u, followed: true} : u)
             }
         case "UNFOLLOW":
             return {
                 ...state,
-                users: state.users.map(u=>u.id === action.userID ? {...u, followed: false} : u)
+                users: state.users.map(u => u.id === action.userID ? {...u, followed: false} : u)
             }
         case "SET_USERS":
-            return {...state, users: action.users}
+            return {
+                ...state, users: action.users
+            }
+        case "SET_CURRENT_PAGE":
+            return {
+                ...state, currentPage: action.currentPage
+            }
+        case "SET_TOTAL_USER_COUNT":
+            return {
+                ...state, totalUserCount: action.totalCount
+            }
         default:
             return state
     }

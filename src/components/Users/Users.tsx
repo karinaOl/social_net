@@ -14,13 +14,36 @@ type UsersAPIResponseType = {
 export class Users extends React.Component<UsersTypeContainer> {
 
     componentDidMount() {
-        axios.get<UsersAPIResponseType>("https://social-network.samuraijs.com/api/1.0/users").then(response => {
+        axios.get<UsersAPIResponseType>(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`).then(response => {
+            this.props.setUsers(response.data.items);
+            this.props.setTotalUserCount(response.data.totalCount);
+        });
+    }
+
+    onPageChanged = (currentPage:number) => {
+        this.props.setCurrentPage(currentPage)
+        axios.get<UsersAPIResponseType>(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${this.props.pageSize}`).then(response => {
             this.props.setUsers(response.data.items);
         });
     }
 
     render() {
+
+        const pagesCount = Math.ceil(this.props.totalUserCount / this.props.pageSize);
+
+        let pages: number[] = [];
+
+        for (let i = 1; i <= pagesCount; i++) {
+            pages.push(i)
+        }
+
         return <div>
+            <div>
+                {pages.map(p => {
+                    return <span className={this.props.currentPage === p ? s.selectedPage : ""}
+                    onClick={()=>{this.onPageChanged(p)}}>{p}</span>
+                })}
+            </div>
             {this.props.users.map(u => <div key={u.id}>
               <span>
                   <div>
