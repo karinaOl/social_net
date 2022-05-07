@@ -1,18 +1,16 @@
 import {RootAppStateType} from "../../redux/reduxStore";
-import {Dispatch} from "redux";
 import {
-    followAC,
+    follow,
     InitialStateUsersType,
-    setCurrentPageAC, setTotalUserCountAC,
-    setUsersAC, toggleIsFetchingAC,
-    unfollowAC,
+    setCurrentPage, setTotalUserCount,
+    setUsers, toggleIsFetching,
+    unfollow,
     UserType
 } from "../../redux/usersReducer";
 import React from "react";
 import axios from "axios";
 import {Users} from "./Users";
 import {connect} from "react-redux";
-import preloader from "../../assets/images/preloader.gif"
 import {Preloader} from "../common/Preloader/Preloader";
 
 
@@ -82,27 +80,12 @@ const mapStateToProps = (state: RootAppStateType): MapStateToPropsType => {
         isFetching: state.usersPage.isFetching
     }
 }
-const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
-    return {
-        follow: (userID: number) => {
-            dispatch(followAC(userID))
-        },
-        unfollow: (userID: number) => {
-            dispatch(unfollowAC(userID))
-        },
-        setUsers: (users: UserType[]) => {
-            dispatch(setUsersAC(users))
-        },
-        setCurrentPage: (currentPage: number) => {
-            dispatch(setCurrentPageAC(currentPage))
-        },
-        setTotalUserCount: (totalCount: number) => {
-            dispatch(setTotalUserCountAC(totalCount))
-        },
-        toggleIsFetching: (isFetching: boolean) => {
-            dispatch(toggleIsFetchingAC(isFetching))
-        }
-    }
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);
+export default connect(mapStateToProps, {
+    follow,
+    unfollow,
+    setUsers,
+    setCurrentPage,
+    setTotalUserCount,
+    toggleIsFetching
+})(UsersContainer);

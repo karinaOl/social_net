@@ -2,15 +2,16 @@ import s from "./Users.module.css";
 import userPhoto from "../../assets/images/images.png";
 import React from "react";
 import {UserType} from "../../redux/usersReducer";
+import {NavLink} from "react-router-dom";
 
 type UsersPropsType = {
     totalUserCount: number
     users: UserType[]
     pageSize: number
     currentPage: number
-    onPageChanged:(currentPage: number)=>void
-    follow: (userID: number)=>void
-    unfollow: (userID: number)=>void
+    onPageChanged: (currentPage: number) => void
+    follow: (userID: number) => void
+    unfollow: (userID: number) => void
 }
 
 
@@ -24,18 +25,22 @@ export const Users = (props: UsersPropsType) => {
         pages.push(i)
     }
 
-  return(
-      <div>
-          <div>
-              {pages.map(p => {
-                  return <span className={props.currentPage === p ? s.selectedPage : ""}
-                               onClick={()=>{props.onPageChanged(p)}}>{p}</span>
-              })}
-          </div>
-          {props.users.map(u => <div key={u.id}>
+    return (
+        <div>
+            <div>
+                {pages.map(p => {
+                    return <span className={props.currentPage === p ? s.selectedPage : ""}
+                                 onClick={() => {
+                                     props.onPageChanged(p)
+                                 }}>{p}</span>
+                })}
+            </div>
+            {props.users.map(u => <div key={u.id}>
               <span>
                   <div>
-                      <img src={u.photos.small !== null ? u.photos.small : userPhoto} className={s.userPhoto}/>
+                      <NavLink to={"/profile/" + u.id}>
+                          <img src={u.photos.small !== null ? u.photos.small : userPhoto} className={s.userPhoto}/>
+                      </NavLink>
                   </div>
                   <div>
                       {u.followed
@@ -43,7 +48,7 @@ export const Users = (props: UsersPropsType) => {
                           : <button onClick={() => props.follow(u.id)}>FOLLOW</button>}
                   </div>
               </span>
-              <span>
+                <span>
                   <span>
                       <div>{u.name}</div>
                       <div>{u.status}</div>
@@ -53,7 +58,7 @@ export const Users = (props: UsersPropsType) => {
                       <div>{"u.location.country"}</div>
                   </span>
               </span>
-          </div>)}
-      </div>
-  )
+            </div>)}
+        </div>
+    )
 }
