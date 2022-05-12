@@ -7,22 +7,22 @@ export const Navbar = () => {
     return(
         <nav className={classes.nav}>
             <div className={classes.item}>
-                <NavLink to={'/profile'} className = { navData => navData.isActive ? `${classes.navLink} ${classes.active}` : classes.navLink}>Profile</NavLink>
+                <NavLink to={'/profile'} className={classes.navLink} activeClassName={classes.active}>Profile</NavLink>
             </div>
             <div className={classes.item}>
-                <NavLink to={'/dialogs'} className = { navData => navData.isActive ? `${classes.navLink} ${classes.active}` : classes.navLink}>Messages</NavLink>
+                <NavLink to={'/dialogs'} className={classes.navLink} activeClassName={classes.active}>Messages</NavLink>
             </div>
             <div className={classes.item}>
-                <NavLink to={'/users'} className = { navData => navData.isActive ? `${classes.navLink} ${classes.active}` : classes.navLink}>Users</NavLink>
+                <NavLink to={'/users'} className={classes.navLink} activeClassName={classes.active}>Users</NavLink>
             </div>
             <div className={classes.item}>
-                <NavLink to={'/news'} className = { navData => navData.isActive ? `${classes.navLink} ${classes.active}` : classes.navLink}>News</NavLink>
+                <NavLink to={'/news'} className={classes.navLink} activeClassName={classes.active}>News</NavLink>
             </div>
             <div className={classes.item}>
-                <NavLink to={'/music'} className = { navData => navData.isActive ? `${classes.navLink} ${classes.active}` : classes.navLink}>Music</NavLink>
+                <NavLink to={'/music'} className={classes.navLink} activeClassName={classes.active}>Music</NavLink>
             </div>
             <div className={classes.item}>
-                <NavLink to={'/settings'} className = { navData => navData.isActive ? `${classes.navLink} ${classes.active}` : classes.navLink}>Settings</NavLink>
+                <NavLink to={'/settings'} className={classes.navLink} activeClassName={classes.active}>Settings</NavLink>
             </div>
         </nav>
     )
