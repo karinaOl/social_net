@@ -12,6 +12,7 @@ export const Header = (props: HeaderType) => {
     return(
         <header className={classes.header}>
 
+            LOGO
 
             <div className={classes.loginBlock}>
                 {
