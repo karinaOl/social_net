@@ -1,5 +1,5 @@
 import React from "react";
-import classes from './Header.module.css'
+import style from './Header.module.css'
 import {NavLink} from "react-router-dom";
 
 
@@ -10,11 +10,11 @@ type HeaderType = {
 
 export const Header = (props: HeaderType) => {
     return(
-        <header className={classes.header}>
+        <header className={style.header}>
 
-            LOGO
+            YELLOW
 
-            <div className={classes.loginBlock}>
+            <div className={style.loginBlock}>
                 {
                     props.isAuth ? props.login : <NavLink to={"./login"}>Login</NavLink>
                 }

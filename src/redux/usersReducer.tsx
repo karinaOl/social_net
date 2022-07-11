@@ -1,3 +1,6 @@
+import {followAPI, userAPI} from "../api/api";
+import {Dispatch} from "redux";
+
 type PhotosType = {
     small: string
     large: string
@@ -20,8 +23,8 @@ export type InitialStateUsersType = {
     followingInProgress: number[]
 }
 
-export type UsersActionType = ReturnType<typeof follow>
-    | ReturnType<typeof unfollow>
+export type UsersActionType = ReturnType<typeof followSuccess>
+    | ReturnType<typeof unfollowSuccess>
     | ReturnType<typeof setUsers>
     | ReturnType<typeof setCurrentPage>
     | ReturnType<typeof setTotalUserCount>
@@ -38,13 +41,13 @@ const initialState: InitialStateUsersType = {
     followingInProgress: []
 }
 
-export const follow = (userID: number) => {
+export const followSuccess = (userID: number) => {
     return {
         type: "FOLLOW",
         userID
     } as const
 }
-export const unfollow = (userID: number) => {
+export const unfollowSuccess = (userID: number) => {
     return {
         type: "UNFOLLOW",
         userID
@@ -84,6 +87,39 @@ export const toggleIsFollowingProgress = (inProgress: boolean, userID: number) =
         inProgress,
         userID
     } as const
+}
+
+export const getUsers = (currentPage: number, pageSize: number) => {
+    return (dispatch: Dispatch<UsersActionType>) => {
+
+        userAPI.getUsers(currentPage, pageSize).then(data => {
+            dispatch(toggleIsFetching(false));
+            dispatch(setUsers(data.items));
+            dispatch(setTotalUserCount(data.totalCount));
+        });
+    }
+}
+
+export const follow = (userID: number) => {
+  return (dispatch: Dispatch<UsersActionType>) => {
+      dispatch(toggleIsFollowingProgress(true, userID));
+      followAPI.follow(userID)
+          .then(data => {
+              if (data.resultCode === 0) dispatch(followSuccess(userID));
+              dispatch(toggleIsFollowingProgress(false, userID));
+          });
+  }
+}
+
+export const unfollow = (userID: number) => {
+  return (dispatch: Dispatch<UsersActionType>) => {
+      dispatch(toggleIsFollowingProgress(true, userID));
+      followAPI.unfollow(userID)
+          .then(data => {
+              if (data.resultCode === 0) dispatch(unfollowSuccess(userID));
+              dispatch(toggleIsFollowingProgress(false, userID));
+          });
+  }
 }
 
 export const UsersReducer = (state = initialState, action: UsersActionType): InitialStateUsersType => {

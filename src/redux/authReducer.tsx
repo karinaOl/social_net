@@ -1,3 +1,6 @@
+import {Dispatch} from "redux";
+import {authAPI} from "../api/api";
+
 export type initialAuthStateType = typeof initialState;
 
 let initialState = {
@@ -7,10 +10,10 @@ let initialState = {
     isAuth: false,
 }
 
-type ActionType = ReturnType<typeof setAuthUsersData>
+type AuthActionType = ReturnType<typeof setAuthUsersData>
 
 
-export const authReducer = (state=initialState, action: ActionType) => {
+export const authReducer = (state=initialState, action: AuthActionType) => {
   switch (action.type){
       case "SET-USERS-DATA":
           return {
@@ -20,6 +23,17 @@ export const authReducer = (state=initialState, action: ActionType) => {
           }
       default:
           return state
+  }
+}
+
+export const getAuthUserData = () => {
+  return (dispatch: Dispatch<AuthActionType>) => {
+      authAPI.getAuth().then(data => {
+          if(data.resultCode === 0) {
+              let {id, login, email} = data.data
+              dispatch(setAuthUsersData(id, email, login));
+          }
+      });
   }
 }
 

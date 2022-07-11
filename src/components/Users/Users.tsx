@@ -3,7 +3,7 @@ import userPhoto from "../../assets/images/images.png";
 import React from "react";
 import {UserType} from "../../redux/usersReducer";
 import {NavLink} from "react-router-dom";
-import {followAPI} from "../../api/api";
+
 
 type UsersPropsType = {
     totalUserCount: number
@@ -29,18 +29,10 @@ export const Users = (props: UsersPropsType) => {
     }
 
     const followUser = (userID: number) => {
-        props.toggleIsFollowingProgress(true, userID);
-        followAPI.follow(userID).then(data => {
-            if (data.resultCode === 0) props.follow(userID);
-            props.toggleIsFollowingProgress(false, userID);
-        });
+        props.follow(userID);
     };
     const unfollowUser = (userID: number) => {
-        props.toggleIsFollowingProgress(true, userID);
-        followAPI.unfollow(userID).then(data => {
-            if (data.resultCode === 0) props.unfollow(userID);
-            props.toggleIsFollowingProgress(false, userID);
-        });
+        props.unfollow(userID)
     };
 
     return (
