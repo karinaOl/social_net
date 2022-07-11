@@ -10,6 +10,7 @@ import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import {Sidebar} from "./components/Sidebar/Sidebar";
 import {SidebarContainer} from "./components/Sidebar/SidebarCointainer";
+import {Login} from "./components/Login/Login";
 
 
 
@@ -28,6 +29,7 @@ function App() {
                     <Route path={'/music'} render={()=><Music/>}/>
                     <Route path={'/settings'} render={()=><Settings/>}/>
                     <Route path={'/users'} render={()=><UsersContainer/>}/>
+                    <Route path={'/login'} render={()=><Login/>}/>
                 </Switch>
             </div>
         </div>
