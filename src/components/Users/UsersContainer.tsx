@@ -11,8 +11,6 @@ import {connect} from "react-redux";
 import {Preloader} from "../common/Preloader/Preloader";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
-import {getUsersProfile} from "../../redux/profileReducer";
-import {withRouter} from "react-router-dom";
 
 
 type MapStateToPropsType = InitialStateUsersType;

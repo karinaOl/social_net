@@ -11,6 +11,12 @@ const instance = axios.create({
     }
 })
 
+type APIResponseDataType<T = {}> = {
+    data: T
+    resultCode: number
+    messages: Array<string>
+}
+
 type UsersAPIResponseType = {
     items: UserType[]
     totalCount: number
@@ -35,24 +41,28 @@ type FollowAPIResponseType = {
 export const followAPI = {
     unfollow(userID: number){
         return instance.delete<FollowAPIResponseType>(`follow/${userID}`)
-            .then(response =>{
-                return response.data
-            })
+            .then(response =>response.data)
     },
     follow(userID: number){
         return instance.post<FollowAPIResponseType>(`follow/${userID}`, {})
-            .then(response =>{
-                return response.data
-            })
+            .then(response => response.data)
     }
 };
 
 type ProfileAPIResponseType = ProfileType;
 
 export const profileApi = {
-    getUsersProfile(userID: string){
-        return instance.get<ProfileAPIResponseType>(`profile/` + userID)
+    getUserProfile(userID: string){
+        return instance.get<ProfileAPIResponseType>(`profile/${userID}`)
             .then( response=> response.data)
+    },
+    getUserStatus(userID: string){
+        return instance.get(`profile/status/${userID}`)
+            .then( response => response.data)
+    },
+    updateUserStatus(status: string){
+        return instance.put<APIResponseDataType>("profile/status", {status: status})
+            .then( response => response.data)
     }
 }
 
