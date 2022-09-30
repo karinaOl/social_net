@@ -1,15 +1,7 @@
 import React from "react";
 import ava from "./../assets/images/images.png"
 
-export type SidebarType = {
-  id: number
-  name: string
-  avatarSrc: string
-}
 
-type InitialSidebarStateType = {
-  friends: SidebarType[]
-}
 
 let initialSidebarState: InitialSidebarStateType = {
   friends: [
@@ -20,9 +12,26 @@ let initialSidebarState: InitialSidebarStateType = {
   ],
 }
 
-export const sidebarReducer = (state= initialSidebarState, action: any):InitialSidebarStateType => {
+export const sidebarReducer = (state= initialSidebarState, action: SideBarActionType):InitialSidebarStateType => {
   switch (action.type){
     default:
       return state
   }
 }
+
+//actions
+const action = () => ({type: "TEST"} as const)
+
+
+//types
+export type SidebarType = {
+  id: number
+  name: string
+  avatarSrc: string
+}
+
+type InitialSidebarStateType = {
+  friends: SidebarType[]
+}
+
+export type SideBarActionType = ReturnType<typeof action>

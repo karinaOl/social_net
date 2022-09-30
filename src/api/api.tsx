@@ -11,10 +11,63 @@ const instance = axios.create({
     }
 })
 
-type APIResponseDataType<T = {}> = {
-    data: T
+export const followAPI = {
+    unfollow(userID: number){
+        return instance.delete<CommonAPIResponseDataType>(`follow/${userID}`)
+            .then(response =>response.data)
+    },
+    follow(userID: number){
+        return instance.post<CommonAPIResponseDataType>(`follow/${userID}`, {})
+            .then(response => response.data)
+    }
+};
+
+
+export const userAPI = {
+    getUsers(currentPage: number = 1, pageSize: number = 10){
+        return instance.get<UsersAPIResponseType>(`users?page=${currentPage}&count=${pageSize}`)
+            .then(response => {
+                return response.data
+            })
+    }
+}
+
+export const profileApi = {
+    getUserProfile(userID: string){
+        return instance.get<ProfileAPIResponseType>(`profile/${userID}`)
+            .then( response=> response.data)
+    },
+    getUserStatus(userID: string){
+        return instance.get<string>(`profile/status/${userID}`)
+            .then( response => response.data)
+    },
+    updateUserStatus(status: string){
+        return instance.put<CommonAPIResponseDataType>("profile/status", {status: status})
+            .then( response => response.data)
+    }
+}
+
+export const authAPI = {
+    getAuth(){
+        return instance.get<CommonAPIResponseDataType<AuthAPIDataType>>(`auth/me`)
+            .then(response => response.data)
+    },
+    login(email: string, password: string, rememberMe: boolean){
+        return instance.post<CommonAPIResponseDataType<{id: number}>>(`auth/login`, {email, password, rememberMe})
+            .then(response => response.data)
+    },
+    logout(){
+        return instance.delete<CommonAPIResponseDataType>(`auth/login`)
+            .then(response => response.data)
+    }
+
+}
+
+//types
+type CommonAPIResponseDataType<T = {}> = {
     resultCode: number
     messages: Array<string>
+    data: T
 }
 
 type UsersAPIResponseType = {
@@ -23,65 +76,13 @@ type UsersAPIResponseType = {
     error: string
 }
 
-export const userAPI = {
-    getUsers(currentPage: number = 1, pageSize: number = 10){
-        return instance.get<UsersAPIResponseType>(`users?page=${currentPage}&count=${pageSize}`)
-                .then(response => {
-                    return response.data
-                })
-    }
-}
-
-type FollowAPIResponseType = {
-    resultCode: number
-    messages: Array<string>
-    data: {}
-};
-
-export const followAPI = {
-    unfollow(userID: number){
-        return instance.delete<FollowAPIResponseType>(`follow/${userID}`)
-            .then(response =>response.data)
-    },
-    follow(userID: number){
-        return instance.post<FollowAPIResponseType>(`follow/${userID}`, {})
-            .then(response => response.data)
-    }
-};
-
 type ProfileAPIResponseType = ProfileType;
 
-export const profileApi = {
-    getUserProfile(userID: string){
-        return instance.get<ProfileAPIResponseType>(`profile/${userID}`)
-            .then( response=> response.data)
-    },
-    getUserStatus(userID: string){
-        return instance.get(`profile/status/${userID}`)
-            .then( response => response.data)
-    },
-    updateUserStatus(status: string){
-        return instance.put<APIResponseDataType>("profile/status", {status: status})
-            .then( response => response.data)
-    }
-}
-
-type AuthHeaderAPIResponseType = {
-    resultCode: number
-    messages: string[]
-    data: {
-        id: number
-        email: string
-        login: string
-    }
-}
-
-export const authAPI = {
-    getAuth(){
-        return instance.get<AuthHeaderAPIResponseType>(`auth/me`)
-            .then(response => response.data)
-    }
-}
+type AuthAPIDataType = {
+    id: number
+    email: string
+    login: string
+};
 
 
 

@@ -1,15 +1,22 @@
 import {applyMiddleware, combineReducers, createStore} from "redux";
-import {profileReducer} from "./profileReducer";
-import {dialogsReducer} from "./dialogsReducer";
-import {sidebarReducer} from "./sidebarReducer";
-import {UsersReducer} from "./usersReducer";
-import {authReducer} from "./authReducer";
+import {ProfileActionType, profileReducer} from "./profileReducer";
+import {DialogsActionType, dialogsReducer} from "./dialogsReducer";
+import {SideBarActionType, sidebarReducer} from "./sidebarReducer";
+import {UsersActionType, UsersReducer} from "./usersReducer";
+import {AuthActionType, authReducer} from "./authReducer";
 import {reducer as formReducer} from "redux-form";
-import thunkMiddleware from "redux-thunk"
+import thunkMiddleware, {ThunkAction} from "redux-thunk"
 
 
 export type RootAppStateType = ReturnType<typeof rootReducer>;
 export type RootStoreType = typeof store
+export type RootActionType = AuthActionType
+    | DialogsActionType
+    | ProfileActionType
+    | SideBarActionType
+    | UsersActionType
+
+export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType, RootAppStateType, unknown, RootActionType>;
 
 let rootReducer = combineReducers({
     profilePage: profileReducer,
