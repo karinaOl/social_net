@@ -3,7 +3,7 @@ import {AppThunkType} from "./reduxStore";
 import {stopSubmit} from "redux-form";
 
 let initialState = {
-    id: 0,
+    id: null as number | null,
     email: "",
     login: "",
     isAuth: false,
@@ -22,9 +22,9 @@ export const authReducer = (state = initialState, action: AuthActionType): initi
 }
 
 //thank creator
-export const getAuthUserData = (): AppThunkType => {
+export const getAuthUserData = (): AppThunkType<Promise<void>> => {
     return (dispatch) => {
-        authAPI.getAuth().then(data => {
+       return authAPI.getAuth().then(data => {
             if (data.resultCode === 0) {
                 let {id, login, email} = data.data
                 dispatch(setAuthUsersData(id, email, login, true));
@@ -58,7 +58,7 @@ export const logout = (): AppThunkType => {
 
 //action creator
 export const setAuthUsersData = (userId: number, email: string, login: string, isAuth: boolean) =>
-    ({type: "SET-USERS-DATA", payload: {userId, email, login, isAuth}} as const)
+    ({type: "SET-USERS-DATA", payload: {id: userId, email, login, isAuth}} as const)
 
 
 //types

@@ -36,7 +36,7 @@ export const LoginForm: React.FC<InjectedFormProps<LoginFormDataType>> = (props)
               <Field placeholder={"Password"} name={"password"} component={Input} type={"password"} validate={[required, maxLength]}/>
           </div>
           <div>
-              <Field type={"checkbox"} name={"rememberMe"} component={Input} validate={[required, maxLength]}/> remember me
+              <Field type={"checkbox"} name={"rememberMe"} component={Input}/> remember me
           </div>
           { props.error && <div className={style.formSummaryError}>
               {props.error}
