@@ -17,7 +17,7 @@ import {
     getCurrentPage,
     getIsFetching,
     getFollowingInProgress
-} from "../../redux/users-selector";
+} from "../../redux/usersSelector";
 
 
 type MapStateToPropsType = InitialStateUsersType;
