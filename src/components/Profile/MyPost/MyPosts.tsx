@@ -18,7 +18,7 @@ export const MyPosts = React.memo((props: MyPostsPropsType) => {
                 <AddNewPostReduxForm onSubmit={addNewPost}/>
             </div>
             <div className={classes.post}>
-                {props.postData.map(p => <Post key={p.id} id={p.id} message={p.message}
+                {[...props.postData].reverse().map(p => <Post key={p.id} id={p.id} message={p.message}
                                                likesCount={p.likesCount}/>)}
             </div>
         </div>
