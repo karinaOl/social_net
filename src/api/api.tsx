@@ -64,13 +64,13 @@ export const authAPI = {
 }
 
 //types
-type CommonAPIResponseDataType<T = {}> = {
+export type CommonAPIResponseDataType<T = {}> = {
     resultCode: number
     messages: Array<string>
     data: T
 }
 
-type UsersAPIResponseType = {
+export type UsersAPIResponseType = {
     items: UserType[]
     totalCount: number
     error: string

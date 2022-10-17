@@ -1,7 +1,7 @@
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import React, {FC} from "react";
-import {Input} from "../common/FormsControls/FormsControls";
-import {maxLengthCreator, required} from "../../utils/validators/validators";
+import {createField, Input} from "../common/FormsControls/FormsControls";
+import {required} from "../../utils/validators/validators";
 import {login} from "../../redux/authReducer";
 import style from "../common/FormsControls/FormControl.module.css"
 import {Redirect} from "react-router-dom";
@@ -24,48 +24,43 @@ type MapDispatchToPropsType = {
 
 type LoginPropsType = MapStateToPropsType & MapDispatchToPropsType
 
-const maxLength = maxLengthCreator(25)
 
-export const LoginForm: React.FC<InjectedFormProps<LoginFormDataType>> = (props) => {
-  return (
-      <form onSubmit={props.handleSubmit}>
-          <div>
-              <Field placeholder={"Email"} name={"email"} component={Input} validate={[required, maxLength]}/>
-          </div>
-          <div>
-              <Field placeholder={"Password"} name={"password"} component={Input} type={"password"} validate={[required, maxLength]}/>
-          </div>
-          <div>
-              <Field type={"checkbox"} name={"rememberMe"} component={Input}/> remember me
-          </div>
-          { props.error && <div className={style.formSummaryError}>
-              {props.error}
-          </div>}
-          <div>
-              <button>Login</button>
-          </div>
-      </form>
-  )
+export const LoginForm: React.FC<InjectedFormProps<LoginFormDataType>> = ({handleSubmit, error}) => {
+    return (
+        <form onSubmit={handleSubmit}>
+            <div>
+                {createField("email", "Email", [required], Input)}
+                {createField("password", "Password", [required], Input, {type: "password"})}
+                {createField("rememberMe", undefined, [], Input, {type: "checkbox"}, "remember me")}
+            </div>
+            {error && <div className={style.formSummaryError}>
+                {error}
+            </div>}
+            <div>
+                <button>Login</button>
+            </div>
+        </form>
+    )
 }
 
 const LoginReduxForm = reduxForm<LoginFormDataType>({form: "login"})(LoginForm)
 
-const Login: FC<LoginPropsType>  = (props) => {
+const Login: FC<LoginPropsType> = (props) => {
 
     const onSubmit = (formData: LoginFormDataType) => {
         props.login(formData.email, formData.password, formData.rememberMe)
     }
 
-    if(props.isAuth) {
+    if (props.isAuth) {
         return <Redirect to={"/profile"}/>
     }
 
-  return(
-      <div>
-          <h1>Login</h1>
-          <LoginReduxForm onSubmit={onSubmit}/>
-      </div>
-  )
+    return (
+        <div>
+            <h1>Login</h1>
+            <LoginReduxForm onSubmit={onSubmit}/>
+        </div>
+    )
 }
 
 const mapStateToProps = (state: RootAppStateType) => ({

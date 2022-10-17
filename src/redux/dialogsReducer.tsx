@@ -33,19 +33,8 @@ export const dialogsReducer = (state = initialState, action: DialogsActionType) 
 }
 
 //action creator
-export const updateNewMessageBodyCreator = (body: string) => {
-    return{
-        type:UPDATE_NEW_MESSAGE_BODY,
-        body: body
-    } as const
-}
-
-export const sendMessageCreator = (newMessageBody: string) => {
-    return{
-        type: SEND_MESSAGE,
-        newMessageBody
-    } as const
-}
+export const updateNewMessageBodyCreator = (body: string) =>({type:UPDATE_NEW_MESSAGE_BODY, body: body} as const)
+export const sendMessageCreator = (newMessageBody: string) =>({type: SEND_MESSAGE, newMessageBody} as const)
 
 // type
 export type DialogType = {
@@ -65,5 +54,5 @@ export type initialDialogStateType = {
 
 export type DialogsActionType = ReturnType<typeof sendMessageCreator> | ReturnType<typeof updateNewMessageBodyCreator>
 
-const UPDATE_NEW_MESSAGE_BODY = 'UPDATE_NEW_MESSAGE_BODY';
-const SEND_MESSAGE= 'SEND_MESSAGE';
+const UPDATE_NEW_MESSAGE_BODY = 'dialog/UPDATE_NEW_MESSAGE_BODY';
+const SEND_MESSAGE= 'dialog/SEND_MESSAGE';
