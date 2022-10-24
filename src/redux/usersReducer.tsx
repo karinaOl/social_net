@@ -9,7 +9,7 @@ const initialState: InitialStateUsersType = {
     totalUserCount: 0,
     currentPage: 1,
     isFetching: false,
-    followingInProgress: []
+    followingInProgress: [],
 }
 
 export const UsersReducer = (state = initialState, action: UsersActionType): InitialStateUsersType => {
