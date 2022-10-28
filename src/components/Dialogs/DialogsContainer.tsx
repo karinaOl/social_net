@@ -1,4 +1,4 @@
-import React from "react";
+import React, {ComponentType} from "react";
 import {initialDialogStateType, sendMessageCreator} from '../../redux/dialogsReducer';
 import {Dialogs} from "./Dialogs";
 import {connect} from "react-redux";
@@ -32,8 +32,9 @@ let mapDispatchToProps = (dispatch: Dispatch) : MapDispatchToPropsType =>{
     }
 }
 
-export const DialogsContainer = compose<React.ComponentType>(
+const DialogsContainer = compose<ComponentType>(
     withAuthRedirect,
     connect(mapStateToProps, mapDispatchToProps)
 )(Dialogs);
 
+export default DialogsContainer;
