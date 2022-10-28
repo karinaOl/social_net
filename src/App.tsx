@@ -1,6 +1,6 @@
 import React, {lazy} from 'react';
 import './App.css';
-import {BrowserRouter, Route, Switch, withRouter,} from "react-router-dom";
+import {HashRouter, Route, Switch, withRouter,} from "react-router-dom";
 import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
@@ -77,10 +77,10 @@ let AppContainer = compose<React.ComponentType>(
 
 export const SocialMainApp = () => {
    return(
-       <BrowserRouter>
+       <HashRouter>
         <Provider store={store}>
             <AppContainer/>
         </Provider>
-    </BrowserRouter>
+    </HashRouter>
    )
 }
